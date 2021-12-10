@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp"
+    app:rippleColor="@color/colorPrimaryLight">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="16dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="12dp">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideLine33"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.33" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideLine66"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.66" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="@color/colorSecondaryDark"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideLine33"
+            app:layout_constraintStart_toStartOf="@id/guideLine33"
+            app:layout_constraintTop_toTopOf="@id/vtlCases" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="@color/colorSecondaryDark"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideLine66"
+            app:layout_constraintStart_toStartOf="@id/guideLine66"
+            app:layout_constraintTop_toTopOf="@id/vtlCases" />
+
+        <TextView
+            android:id="@+id/vtlCountryName"
+            style="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_thin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="France" />
+
+        <TextView
+            android:id="@+id/vtlCases"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/guideLine33"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/vtlCountryName"
+            tools:text="294" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dashboard_primary_cases_label"
+            app:layout_constraintEnd_toEndOf="@id/guideLine33"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/vtlCases" />
+
+        <TextView
+            android:id="@+id/vtlDeaths"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/guideLine66"
+            app:layout_constraintStart_toStartOf="@id/guideLine33"
+            app:layout_constraintTop_toBottomOf="@id/vtlCountryName"
+            tools:text="25" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dashboard_primary_deaths_label"
+            app:layout_constraintEnd_toEndOf="@id/guideLine66"
+            app:layout_constraintStart_toStartOf="@id/guideLine33"
+            app:layout_constraintTop_toBottomOf="@id/vtlDeaths" />
+
+        <TextView
+            android:id="@+id/vtlIGR"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guideLine66"
+            app:layout_constraintTop_toBottomOf="@id/vtlCountryName"
+            tools:text="1.24" />
+
+        <TextView
+            android:id="@+id/vtlIGRLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dashboard_vtl_igr_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guideLine66"
+            app:layout_constraintTop_toBottomOf="@id/vtlDeaths" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/vtlIGRGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="vtlIGR,vtlIGRLabel" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="indigo_200">#FF757de8</color>
+    <color name="indigo_500">#FF3f51b5</color>
+    <color name="indigo_700">#FF002984</color>
+    <color name="grey_50">#FFfafafa</color>
+    <color name="grey_700">#FFc7c7c7</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="iron">#99000000</color>
+
+    <color name="colorPrimary">@color/indigo_500</color>
+    <color name="colorPrimaryLight">@color/indigo_200</color>
+    <color name="colorPrimaryDark">@color/indigo_700</color>
+    <color name="colorSecondary">@color/grey_50</color>
+    <color name="colorSecondaryDark">@color/grey_700</color>
+</resources>

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    tools:context=".ui.view.DashboardFragment">
+
+    <View
+        android:id="@+id/callout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintDimensionRatio="5:2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/appTitle"
+        style="@style/TextAppearance.MaterialComponents.Headline6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="@color/colorPrimaryDark"
+        android:text="@string/app_title"
+        android:textAlignment="center"
+        android:textColor="@color/colorSecondary"
+        app:layout_constraintBottom_toTopOf="@id/primaryCountryCard" />
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="8dp"
+        android:indeterminateTint="@color/colorPrimaryDark"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/primaryCountryCard"
+        app:layout_constraintEnd_toEndOf="@id/primaryCountryCard"
+        app:layout_constraintStart_toStartOf="@id/primaryCountryCard"
+        app:layout_constraintTop_toTopOf="@id/primaryCountryCard" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/primaryCountryCard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardElevation="4dp"
+        app:layout_constraintBottom_toBottomOf="@id/callout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/callout">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/primaryCountryCardGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="24dp">
+
+            <TextView
+                android:id="@+id/primaryCountryName"
+                style="@style/TextAppearance.MaterialComponents.Headline5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Singapore" />
+
+            <TextView
+                android:id="@+id/primaryCountryIGR"
+                style="@style/TextAppearance.MaterialComponents.Headline6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="4dp"
+                app:layout_constraintEnd_toStartOf="@id/primaryCountryIGRLabel"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/primaryCountryName"
+                tools:text="0.57" />
+
+            <TextView
+                android:id="@+id/primaryCountryIGRLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:text="@string/dashboard_primary_igr_label"
+                app:layout_constraintBottom_toBottomOf="@id/primaryCountryIGR"
+                app:layout_constraintEnd_toStartOf="@id/primaryCountryIGRInfo"
+                app:layout_constraintStart_toEndOf="@id/primaryCountryIGR" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/primaryCountryIGRInfo"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="28dp"
+                android:layout_height="40dp"
+                android:padding="4dp"
+                app:cornerRadius="24dp"
+                app:icon="@drawable/ic_info_16"
+                app:iconSize="20dp"
+                app:iconTint="@color/colorPrimaryDark"
+                app:layout_constraintBottom_toBottomOf="@id/primaryCountryIGRLabel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/primaryCountryIGRLabel"
+                app:layout_constraintTop_toTopOf="@id/primaryCountryIGRLabel" />
+
+            <TextView
+                android:id="@+id/primaryCountryCases"
+                style="@style/TextAppearance.MaterialComponents.Headline6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="4dp"
+                app:layout_constraintEnd_toStartOf="@id/primaryCountryCasesLabel"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/primaryCountryIGR"
+                tools:text="730" />
+
+            <TextView
+                android:id="@+id/primaryCountryCasesLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:text="@string/dashboard_primary_cases_label"
+                app:layout_constraintBottom_toBottomOf="@id/primaryCountryCases"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/primaryCountryCases" />
+
+            <TextView
+                android:id="@+id/primaryCountryDeaths"
+                style="@style/TextAppearance.MaterialComponents.Headline6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="4dp"
+                app:layout_constraintEnd_toStartOf="@id/primaryCountryDeathsLabel"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/primaryCountryCases"
+                tools:text="4" />
+
+            <TextView
+                android:id="@+id/primaryCountryDeathsLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:text="@string/dashboard_primary_deaths_label"
+                app:layout_constraintBottom_toBottomOf="@id/primaryCountryDeaths"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/primaryCountryDeaths" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/vtlGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="vtlTitle,vtlRecyclerView" />
+
+    <TextView
+        android:id="@+id/vtlTitle"
+        style="@style/TextAppearance.MaterialComponents.Headline6"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="@string/dashboard_primary_vtl_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/primaryCountryCard" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/vtlRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:paddingBottom="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/vtlTitle"
+        tools:listitem="@layout/vtl_item" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
