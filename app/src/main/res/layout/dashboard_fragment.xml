@@ -40,6 +40,43 @@
         app:layout_constraintStart_toStartOf="@id/primaryCountryCard"
         app:layout_constraintTop_toTopOf="@id/primaryCountryCard" />
 
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/tryAgainGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:constraint_referenced_ids="tryAgain,refresh" />
+
+    <TextView
+        android:id="@+id/tryAgain"
+        style="@style/TextAppearance.MaterialComponents.Subtitle1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:autoSizeStepGranularity="1sp"
+        android:autoSizeTextType="uniform"
+        android:elevation="8dp"
+        android:maxLines="2"
+        android:text="@string/try_again"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf="@id/refresh"
+        app:layout_constraintEnd_toEndOf="@id/primaryCountryCard"
+        app:layout_constraintStart_toStartOf="@id/primaryCountryCard" />
+
+    <ImageView
+        android:id="@+id/refresh"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:elevation="8dp"
+        android:src="@drawable/ic_refresh_24"
+        app:layout_constraintBottom_toBottomOf="@id/primaryCountryCard"
+        app:layout_constraintEnd_toEndOf="@id/primaryCountryCard"
+        app:layout_constraintStart_toStartOf="@id/primaryCountryCard"
+        app:layout_constraintTop_toTopOf="@id/primaryCountryCard"
+        app:tint="@color/colorPrimaryDark" />
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/primaryCountryCard"
         android:layout_width="wrap_content"

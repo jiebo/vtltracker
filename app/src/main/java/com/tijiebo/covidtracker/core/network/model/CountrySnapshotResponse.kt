@@ -1,6 +1,7 @@
 package com.tijiebo.covidtracker.core.network.model
 
 import com.google.gson.annotations.SerializedName
+import com.tijiebo.covidtracker.ui.model.CountryDetailData
 import com.tijiebo.covidtracker.ui.model.DashboardData
 import java.util.*
 
@@ -32,6 +33,25 @@ data class CountrySnapshot(
             latestConfirmed = latest.confirmed - control.confirmed,
             latestDeaths = latest.deaths - control.deaths,
             infectionRate = currentWeek.toDouble() / pastWeek.toDouble()
+        )
+    }
+
+    fun toCountryDetails(): CountryDetailData {
+        val deltas = mutableListOf<CountryDetailData.DailyDeltas>()
+        for (i in 1 until this.daily.size) {
+            deltas.add(
+                CountryDetailData.DailyDeltas(
+                    date = this.daily[i].updatedDate,
+                    cases = this.daily[i].confirmed - this.daily[i - 1].confirmed,
+                    deaths = this.daily[i].deaths - this.daily[i - 1].deaths
+                )
+            )
+        }
+        return CountryDetailData(
+            countryName = countryName,
+            cumulativeCases = daily.last().confirmed,
+            cumulativeDeaths = daily.last().deaths,
+            daily = deltas
         )
     }
 

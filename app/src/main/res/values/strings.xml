@@ -9,10 +9,12 @@
     <string name="igr_disclaimer_title">Weekly Infection Growth Rate</string>
     <string name="igr_disclaimer_message">This is the ratio between the number of cases in one week and the number in the previous week. It\'s a useful indicator to assess the trajectory of a country/region\'s Covid situation</string>
     <string name="detail_history_title">Past 2 weeks</string>
+    <string name="detail_history_cumulative_cases_label">total cases</string>
+    <string name="detail_history_cumulative_deaths_label">total deaths</string>
     <string name="cache_disclaimer">Retrieving latest data…</string>
 
     <string name="country_detail_not_available">Unable to retrieve country data</string>
     <string name="network_failed">Unable to retrieve latest data.</string>
-    <string name="try_again">Try again</string>
+    <string name="try_again">Encountered some network issues. Please try again.</string>
     <string name="generic_error_message">Something went wrong, please try again later.</string>
 </resources>

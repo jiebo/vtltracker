@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.tijiebo.covidtracker.R
 import com.tijiebo.covidtracker.core.network.model.CountrySnapshot
+import com.tijiebo.covidtracker.ui.model.CountryDetailData
 import com.tijiebo.covidtracker.ui.model.DashboardData
 import com.tijiebo.covidtracker.ui.model.GeneralServiceException
 import com.tijiebo.covidtracker.ui.repo.CovidTrackerRepo
@@ -16,7 +17,7 @@ class DashboardViewModel(private val repo: CovidTrackerRepo) : ViewModel() {
     private val disposable = CompositeDisposable()
 
     val dashboardState: MutableLiveData<UiState> = MutableLiveData(UiState.Initial)
-    val countryDetails: MutableLiveData<CountrySnapshot> = MutableLiveData()
+    val countryDetails: MutableLiveData<CountryDetailData> = MutableLiveData()
     val displayError: PublishSubject<Int> = PublishSubject.create()
     val displayIgrInfo: PublishSubject<Boolean> = PublishSubject.create()
     val displayCountryDetails: PublishSubject<String> =

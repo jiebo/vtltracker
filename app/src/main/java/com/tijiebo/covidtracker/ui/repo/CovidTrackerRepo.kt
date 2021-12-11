@@ -5,6 +5,7 @@ import com.tijiebo.covidtracker.core.cache.CovidSharedPreferences
 import com.tijiebo.covidtracker.core.network.ApiService
 import com.tijiebo.covidtracker.core.network.model.CountrySnapshot
 import com.tijiebo.covidtracker.core.network.model.CountrySnapshotResponse
+import com.tijiebo.covidtracker.ui.model.CountryDetailData
 import com.tijiebo.covidtracker.ui.model.GeneralServiceException
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.Observable
@@ -69,9 +70,9 @@ class CovidTrackerRepo(
         )
     }
 
-    fun getCountryDate(code: String): Single<CountrySnapshot> {
+    fun getCountryDate(code: String): Single<CountryDetailData> {
         return cache.getCountryData(code)?.let {
-            Single.just(it)
+            Single.just(it.toCountryDetails())
         } ?: throw GeneralServiceException(R.string.country_detail_not_available)
     }
 

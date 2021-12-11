@@ -59,6 +59,7 @@ class DashboardFragment : Fragment() {
             clearPrefs.clearCache()
             true
         }
+        binding.refresh.setOnClickListener { viewModel.fetchAll() }
         vtlAdapter = VtlCountryAdapter(mutableListOf(), viewModel)
         binding.vtlRecyclerView.apply {
             adapter = vtlAdapter
@@ -73,9 +74,10 @@ class DashboardFragment : Fragment() {
                 is UiState.Loading -> binding.progress.visibility = View.VISIBLE
                 is UiState.Latest -> setLatestState(it.data)
                 is UiState.Cached -> setCachedState(it.data)
-                is UiState.Error -> setErrorState(it.withData)
+                is UiState.Error -> if (it.withData) setErrorState()
             }
             binding.progress.setVisible(it is UiState.Loading)
+            binding.tryAgainGroup.setVisible(it is UiState.Error && !it.withData)
         })
         disposables.addAll(
             viewModel.displayIgrInfo.subscribe { displayIgrInfo() },
@@ -112,14 +114,16 @@ class DashboardFragment : Fragment() {
         vtlAdapter?.setItems(dashboardData.vtlCountries)
     }
 
-    private fun setErrorState(withData: Boolean) {
+    private fun setErrorState() {
         snackbar =
-            Snackbar.make(binding.root, R.string.network_failed, Snackbar.LENGTH_INDEFINITE).apply {
-                setAction(R.string.try_again) {
-                    viewModel.fetchAll()
+            Snackbar.make(binding.root, R.string.network_failed, Snackbar.LENGTH_INDEFINITE)
+                .apply {
+                    setAction(R.string.try_again) {
+                        viewModel.fetchAll()
+                    }
+                    show()
                 }
-                show()
-            }
+
     }
 
     private fun displayIgrInfo() {

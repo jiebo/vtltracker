@@ -20,8 +20,8 @@
         android:layout_height="56dp"
         android:layout_margin="4dp"
         app:cornerRadius="24dp"
-        app:iconSize="24dp"
         app:icon="@drawable/ic_back_24"
+        app:iconSize="24dp"
         app:iconTint="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -73,7 +73,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/dashboard_primary_cases_label" />
+                    android:text="@string/detail_history_cumulative_cases_label" />
             </LinearLayout>
 
             <LinearLayout
@@ -94,7 +94,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/dashboard_primary_deaths_label" />
+                    android:text="@string/detail_history_cumulative_deaths_label" />
             </LinearLayout>
         </LinearLayout>
 
@@ -111,20 +111,43 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/summaryContentCard" />
 
+    <LinearLayout
+        android:id="@+id/historyLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:gravity="end"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@id/detailHistoryRecyclerView"
+        app:layout_constraintEnd_toStartOf="@id/detailHistoryRecyclerView"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            style="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dashboard_primary_cases_label"
+            android:textAllCaps="true" />
+
+        <TextView
+            style="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/dashboard_primary_deaths_label"
+            android:textAllCaps="true" />
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/detailHistoryRecyclerView"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_height="wrap_content"
         android:clipToPadding="false"
-        android:overScrollMode="never"
-        android:paddingBottom="32dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/historyLabel"
         app:layout_constraintTop_toBottomOf="@id/detailHistoryTitle"
-        tools:listitem="@layout/vtl_item" />
+        tools:itemCount="1"
+        tools:listitem="@layout/history_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
