@@ -16,6 +16,7 @@
         <item name="android:textColorPrimary">@color/iron</item>
         <!-- Fonts. -->
     </style>
+
     <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
         <item name="android:fontFamily">@font/roboto_thin</item>
     </style>

@@ -1,6 +1,7 @@
 package com.tijiebo.covidtracker.ui
 
 import android.app.Application
+import com.tijiebo.covidtracker.core.di.cacheModule
 import com.tijiebo.covidtracker.core.di.networkModule
 import com.tijiebo.covidtracker.core.di.repoModule
 import com.tijiebo.covidtracker.core.di.vmModule
@@ -18,7 +19,8 @@ class MainApp : Application() {
                 listOf(
                     networkModule,
                     vmModule,
-                    repoModule
+                    repoModule,
+                    cacheModule
                 )
             )
         }

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.tijiebo.covidtracker.core.util.formatString
 import com.tijiebo.covidtracker.databinding.CountryDetailFragmentBinding
 import com.tijiebo.covidtracker.ui.viewmodel.DashboardViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -31,8 +32,8 @@ class CountryDetailFragment : Fragment() {
         initialiseViews()
         viewModel.countryDetails.observe(viewLifecycleOwner, {
             binding.countryTitle.text = it.countryName
-            binding.detailCases.text = it.daily.last().confirmed.toString()
-            binding.detailDeaths.text = it.daily.last().deaths.toString()
+            binding.detailCases.text = it.daily.last().confirmed.formatString()
+            binding.detailDeaths.text = it.daily.last().deaths.formatString()
         })
     }
 

@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.Group
 import androidx.recyclerview.widget.RecyclerView
 import com.tijiebo.covidtracker.R
+import com.tijiebo.covidtracker.core.util.formatString
 import com.tijiebo.covidtracker.core.util.to2dp
 import com.tijiebo.covidtracker.databinding.VtlItemBinding
 import com.tijiebo.covidtracker.ui.model.DashboardData
@@ -38,8 +39,8 @@ class VtlCountryAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(countrySummary: DashboardData.CountrySummary) {
             binding.vtlCountryName.text = countrySummary.countryName
-            binding.vtlCases.text = countrySummary.latestConfirmed.toString()
-            binding.vtlDeaths.text = countrySummary.latestDeaths.toString()
+            binding.vtlCases.text = countrySummary.latestConfirmed.formatString()
+            binding.vtlDeaths.text = countrySummary.latestDeaths.formatString()
             binding.vtlIGR.text = countrySummary.infectionRate.to2dp()
             itemView.setOnClickListener {
                 viewModel.navigateToDetailsPage(countrySummary)

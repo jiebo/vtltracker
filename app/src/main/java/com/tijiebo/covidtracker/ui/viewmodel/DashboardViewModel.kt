@@ -2,9 +2,12 @@ package com.tijiebo.covidtracker.ui.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.tijiebo.covidtracker.R
 import com.tijiebo.covidtracker.core.network.model.CountrySnapshot
 import com.tijiebo.covidtracker.ui.model.DashboardData
+import com.tijiebo.covidtracker.ui.model.GeneralServiceException
 import com.tijiebo.covidtracker.ui.repo.CovidTrackerRepo
+import com.tijiebo.covidtracker.ui.repo.CovidTrackerRepo.RepoResult.*
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
 
@@ -14,21 +17,30 @@ class DashboardViewModel(private val repo: CovidTrackerRepo) : ViewModel() {
 
     val dashboardState: MutableLiveData<UiState> = MutableLiveData(UiState.Initial)
     val countryDetails: MutableLiveData<CountrySnapshot> = MutableLiveData()
+    val displayError: PublishSubject<Int> = PublishSubject.create()
     val displayIgrInfo: PublishSubject<Boolean> = PublishSubject.create()
     val displayCountryDetails: PublishSubject<String> =
         PublishSubject.create()
 
     fun fetchAll() {
         disposable.add(
-            repo.getSnapshot()
-                .map {
-                    DashboardData.fromCountrySnapshots(it)
-                }
+            repo.getData()
                 .doOnSubscribe { dashboardState.postValue(UiState.Loading) }
                 .subscribe({
-                    dashboardState.postValue(UiState.Success(it))
+                    dashboardState.postValue(
+                        when (it) {
+                            is Cached -> UiState.Cached(DashboardData.fromCountrySnapshots(it.data))
+                            is Latest -> UiState.Latest(DashboardData.fromCountrySnapshots(it.data))
+                            else -> UiState.Loading
+                        }
+                    )
                 }, {
-                    println("Inside ${it.localizedMessage}")
+                    dashboardState.postValue(
+                        UiState.Error(
+                            dashboardState.value is UiState.Cached ||
+                                    dashboardState.value is UiState.Latest
+                        )
+                    )
                 })
         )
     }
@@ -39,7 +51,10 @@ class DashboardViewModel(private val repo: CovidTrackerRepo) : ViewModel() {
                 .subscribe({
                     countryDetails.postValue(it)
                 }, {
-
+                    displayError.onNext(
+                        (it as? GeneralServiceException)?.errorResId
+                            ?: R.string.generic_error_message
+                    )
                 })
         )
     }
@@ -54,6 +69,7 @@ class DashboardViewModel(private val repo: CovidTrackerRepo) : ViewModel() {
 
     override fun onCleared() {
         disposable.clear()
+        displayError.onComplete()
         displayIgrInfo.onComplete()
         displayCountryDetails.onComplete()
         super.onCleared()
@@ -62,7 +78,8 @@ class DashboardViewModel(private val repo: CovidTrackerRepo) : ViewModel() {
     sealed class UiState {
         object Initial : UiState()
         object Loading : UiState()
-        object Error : UiState()
-        class Success(val data: DashboardData) : UiState()
+        class Error(val withData: Boolean) : UiState()
+        class Cached(val data: DashboardData) : UiState()
+        class Latest(val data: DashboardData) : UiState()
     }
 }

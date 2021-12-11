@@ -6,25 +6,32 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import com.tijiebo.covidtracker.NavigationController
 import com.tijiebo.covidtracker.R
+import com.tijiebo.covidtracker.core.cache.CovidSharedPreferences
+import com.tijiebo.covidtracker.core.util.formatString
 import com.tijiebo.covidtracker.core.util.setVisible
 import com.tijiebo.covidtracker.core.util.to2dp
 import com.tijiebo.covidtracker.databinding.DashboardFragmentBinding
 import com.tijiebo.covidtracker.ui.model.DashboardData
 import com.tijiebo.covidtracker.ui.viewmodel.DashboardViewModel
+import com.tijiebo.covidtracker.ui.viewmodel.DashboardViewModel.UiState
 import io.reactivex.disposables.CompositeDisposable
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DashboardFragment : Fragment() {
+
+    private val clearPrefs: CovidSharedPreferences by inject()
 
     private val viewModel by sharedViewModel<DashboardViewModel>()
     private val disposables = CompositeDisposable()
 
+    private var snackbar: Snackbar? = null
     private var navigationController: NavigationController? = null
     private var vtlAdapter: VtlCountryAdapter? = null
     private var _binding: DashboardFragmentBinding? = null
@@ -48,6 +55,10 @@ class DashboardFragment : Fragment() {
 
     private fun initialiseViews() {
         binding.primaryCountryIGRInfo.setOnClickListener { viewModel.displayIgrPopup() }
+        binding.primaryCountryIGRInfo.setOnLongClickListener {
+            clearPrefs.clearCache()
+            true
+        }
         vtlAdapter = VtlCountryAdapter(mutableListOf(), viewModel)
         binding.vtlRecyclerView.apply {
             adapter = vtlAdapter
@@ -58,20 +69,13 @@ class DashboardFragment : Fragment() {
     private fun observeVm() {
         viewModel.dashboardState.observe(viewLifecycleOwner, {
             when (it) {
-                is DashboardViewModel.UiState.Initial -> {
-                    binding.vtlGroup.visibility = View.GONE
-                }
-                is DashboardViewModel.UiState.Loading -> {
-                    binding.progress.visibility = View.VISIBLE
-                }
-                is DashboardViewModel.UiState.Success -> {
-                    setSuccessState(it.data)
-                }
+                is UiState.Initial -> binding.vtlGroup.visibility = View.GONE
+                is UiState.Loading -> binding.progress.visibility = View.VISIBLE
+                is UiState.Latest -> setLatestState(it.data)
+                is UiState.Cached -> setCachedState(it.data)
+                is UiState.Error -> setErrorState(it.withData)
             }
-            binding.primaryCountryCardGroup.visibility =
-                if (it is DashboardViewModel.UiState.Success) View.VISIBLE else View.INVISIBLE
-            binding.progress.setVisible(it is DashboardViewModel.UiState.Loading)
-            binding.vtlGroup.setVisible(it is DashboardViewModel.UiState.Success)
+            binding.progress.setVisible(it is UiState.Loading)
         })
         disposables.addAll(
             viewModel.displayIgrInfo.subscribe { displayIgrInfo() },
@@ -82,14 +86,40 @@ class DashboardFragment : Fragment() {
         )
     }
 
-    private fun setSuccessState(dashboardData: DashboardData) {
+    private fun setLatestState(dashboardData: DashboardData) {
+        snackbar?.let { if (it.isShown) it.dismiss() }
+        snackbar = null
+        displayDashboardData(dashboardData)
+    }
+
+    private fun setCachedState(dashboardData: DashboardData) {
+        snackbar =
+            Snackbar.make(binding.root, R.string.cache_disclaimer, Snackbar.LENGTH_LONG).apply {
+                show()
+            }
+        displayDashboardData(dashboardData)
+    }
+
+    private fun displayDashboardData(dashboardData: DashboardData) {
         binding.apply {
             primaryCountryName.text = dashboardData.primaryCountry.countryName
-            primaryCountryCases.text = dashboardData.primaryCountry.latestConfirmed.toString()
-            primaryCountryDeaths.text = dashboardData.primaryCountry.latestDeaths.toString()
+            primaryCountryCases.text = dashboardData.primaryCountry.latestConfirmed.formatString()
+            primaryCountryDeaths.text = dashboardData.primaryCountry.latestDeaths.formatString()
             primaryCountryIGR.text = dashboardData.primaryCountry.infectionRate.to2dp()
+            primaryCountryCardGroup.visibility = View.VISIBLE
+            vtlGroup.visibility = View.VISIBLE
         }
         vtlAdapter?.setItems(dashboardData.vtlCountries)
+    }
+
+    private fun setErrorState(withData: Boolean) {
+        snackbar =
+            Snackbar.make(binding.root, R.string.network_failed, Snackbar.LENGTH_INDEFINITE).apply {
+                setAction(R.string.try_again) {
+                    viewModel.fetchAll()
+                }
+                show()
+            }
     }
 
     private fun displayIgrInfo() {

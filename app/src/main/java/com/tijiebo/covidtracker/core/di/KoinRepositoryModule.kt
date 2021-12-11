@@ -6,7 +6,8 @@ import org.koin.dsl.module
 val repoModule = module {
     factory {
         CovidTrackerRepo(
-            api = get()
+            api = get(),
+            cache = get()
         )
     }
 }
