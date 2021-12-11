@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity(), NavigationController {
     }
 
     override fun navigateToDetailsPage(countryId: String) {
+        if (supportFragmentManager.isDestroyed) return
         supportFragmentManager.beginTransaction().apply {
             supportFragmentManager.findFragmentByTag(DashboardFragment.TAG)?.let { this.hide(it) }
             add(R.id.container, CountryDetailFragment.newInstance(), CountryDetailFragment.TAG)

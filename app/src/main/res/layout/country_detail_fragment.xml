@@ -126,16 +126,14 @@
             style="@style/TextAppearance.MaterialComponents.Subtitle1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/dashboard_primary_cases_label"
-            android:textAllCaps="true" />
+            android:text="@string/detail_history_cases_label" />
 
         <TextView
             style="@style/TextAppearance.MaterialComponents.Subtitle1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="@string/dashboard_primary_deaths_label"
-            android:textAllCaps="true" />
+            android:text="@string/detail_history_deaths_label" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -149,5 +147,42 @@
         app:layout_constraintTop_toBottomOf="@id/detailHistoryTitle"
         tools:itemCount="1"
         tools:listitem="@layout/history_item" />
+
+    <TextView
+        android:id="@+id/detailIgrTitle"
+        style="@style/TextAppearance.MaterialComponents.Headline6"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="@string/detail_history_igr_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/detailHistoryRecyclerView" />
+
+    <TextView
+        android:id="@+id/detailIgr"
+        style="@style/TextAppearance.MaterialComponents.Headline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/detailIgrTitle"
+        tools:text="1.424" />
+
+    <TextView
+        android:id="@+id/detailIgrInfo"
+        style="@style/TextAppearance.MaterialComponents.Body2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:text="@string/igr_disclaimer_message"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/detailIgr" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

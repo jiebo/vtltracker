@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.LinearSnapHelper
 import com.tijiebo.covidtracker.core.util.formatString
+import com.tijiebo.covidtracker.core.util.to3dp
 import com.tijiebo.covidtracker.databinding.CountryDetailFragmentBinding
 import com.tijiebo.covidtracker.ui.viewmodel.DashboardViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -37,6 +37,7 @@ class CountryDetailFragment : Fragment() {
             binding.countryTitle.text = it.countryName
             binding.detailCases.text = it.cumulativeCases.formatString()
             binding.detailDeaths.text = it.cumulativeDeaths.formatString()
+            binding.detailIgr.text = it.igr.to3dp()
             historyAdapter?.setItems(it.daily)
         })
     }
@@ -47,7 +48,6 @@ class CountryDetailFragment : Fragment() {
         binding.detailHistoryRecyclerView.apply {
             adapter = historyAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            LinearSnapHelper().attachToRecyclerView(this)
         }
     }
 

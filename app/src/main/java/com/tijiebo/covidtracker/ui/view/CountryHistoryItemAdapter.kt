@@ -3,7 +3,6 @@ package com.tijiebo.covidtracker.ui.view
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.tijiebo.covidtracker.core.network.model.CountrySnapshot
 import com.tijiebo.covidtracker.core.util.formatString
 import com.tijiebo.covidtracker.core.util.formatToCalendarDate
 import com.tijiebo.covidtracker.databinding.HistoryItemBinding
@@ -22,7 +21,7 @@ class CountryHistoryItemAdapter(
     }
 
     override fun onBindViewHolder(holder: CountryHistoryItemViewHolder, position: Int) {
-        holder.bind(list[position])
+        holder.bind(list[list.size - position - 1]) // Reverse order
     }
 
     override fun getItemCount() = list.size

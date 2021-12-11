@@ -47,11 +47,14 @@ data class CountrySnapshot(
                 )
             )
         }
+        val currentWeek = daily[daily.size - 1].confirmed - daily[daily.size - 7].confirmed
+        val pastWeek = daily[daily.size - 8].confirmed - daily[daily.size - 14].confirmed
         return CountryDetailData(
             countryName = countryName,
             cumulativeCases = daily.last().confirmed,
             cumulativeDeaths = daily.last().deaths,
-            daily = deltas
+            daily = deltas,
+            igr = currentWeek.toDouble() / pastWeek.toDouble()
         )
     }
 

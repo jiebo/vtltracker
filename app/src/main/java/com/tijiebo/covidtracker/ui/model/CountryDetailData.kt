@@ -6,6 +6,7 @@ data class CountryDetailData(
     val countryName: String,
     val cumulativeCases: Int,
     val cumulativeDeaths: Int,
+    val igr: Double,
     val daily: List<DailyDeltas>
 ) {
     data class DailyDeltas(
