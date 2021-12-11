@@ -20,7 +20,12 @@ class MainActivity : AppCompatActivity(), NavigationController {
     override fun navigateToDetailsPage(countryId: String) {
         if (supportFragmentManager.isDestroyed) return
         supportFragmentManager.beginTransaction().apply {
-            supportFragmentManager.findFragmentByTag(DashboardFragment.TAG)?.let { this.hide(it) }
+            setCustomAnimations(
+                R.anim.slide_in_right,
+                R.anim.slide_out_right,
+                R.anim.slide_in_right,
+                R.anim.slide_out_right,
+            )
             add(R.id.container, CountryDetailFragment.newInstance(), CountryDetailFragment.TAG)
             addToBackStack(null)
             commit()

@@ -64,6 +64,7 @@ class DashboardFragment : Fragment() {
             adapter = vtlAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
+        binding.swipeRefresh.setOnRefreshListener { viewModel.fetchAll(true) }
     }
 
     private fun observeVm() {
@@ -80,16 +81,21 @@ class DashboardFragment : Fragment() {
         })
         disposables.addAll(
             viewModel.displayIgrInfo.subscribe { displayIgrInfo() },
-            viewModel.displayCountryDetails.subscribe {
+            viewModel.displayCountryDetails.subscribe({
                 viewModel.getCountryDetail(it)
                 navigationController?.navigateToDetailsPage(it)
-            }
+            }, {
+
+            })
         )
     }
 
     private fun setLatestState(dashboardData: DashboardData) {
         snackbar?.let { if (it.isShown) it.dismiss() }
         snackbar = null
+        binding.swipeRefresh.apply {
+            if (this.isRefreshing) this.isRefreshing = false
+        }
         displayDashboardData(dashboardData)
     }
 

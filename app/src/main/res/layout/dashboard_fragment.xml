@@ -60,9 +60,9 @@
         android:maxLines="2"
         android:text="@string/try_again"
         android:textAlignment="center"
-        app:layout_constraintTop_toBottomOf="@id/refresh"
         app:layout_constraintEnd_toEndOf="@id/primaryCountryCard"
-        app:layout_constraintStart_toStartOf="@id/primaryCountryCard" />
+        app:layout_constraintStart_toStartOf="@id/primaryCountryCard"
+        app:layout_constraintTop_toBottomOf="@id/refresh" />
 
     <ImageView
         android:id="@+id/refresh"
@@ -195,7 +195,7 @@
         android:id="@+id/vtlGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="vtlTitle,vtlRecyclerView" />
+        app:constraint_referenced_ids="vtlTitle,swipeRefresh" />
 
     <TextView
         android:id="@+id/vtlTitle"
@@ -208,20 +208,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/primaryCountryCard" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/vtlRecyclerView"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:clipToPadding="false"
-        android:overScrollMode="never"
-        android:paddingBottom="56dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/vtlTitle"
-        tools:listitem="@layout/vtl_item" />
+        app:layout_constraintTop_toBottomOf="@id/vtlTitle">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/vtlRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:paddingBottom="56dp"
+            tools:listitem="@layout/vtl_item" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

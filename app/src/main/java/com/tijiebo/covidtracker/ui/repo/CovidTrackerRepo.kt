@@ -37,9 +37,9 @@ class CovidTrackerRepo(
 //        "bn"
     )
 
-    fun getData(): Observable<RepoResult> {
+    fun getData(forceRefresh: Boolean = false): Observable<RepoResult> {
         return Observable.merge(
-            getCachedData(),
+            if (forceRefresh) Observable.just(RepoResult.NoOp) else getCachedData(),
             getNetworkData()
         )
     }
@@ -55,9 +55,7 @@ class CovidTrackerRepo(
             .subscribeOn(Schedulers.io())
             .map { CountrySnapshot.fromResponse(it) }
             .toList()
-            .doAfterSuccess {
-                cache.saveData(it)
-            }
+            .doAfterSuccess { cache.saveData(it) }
             .map { RepoResult.Latest(it) }
             .toObservable()
     }
@@ -79,6 +77,7 @@ class CovidTrackerRepo(
     sealed class RepoResult {
         class Cached(val data: List<CountrySnapshot>) : RepoResult()
         object EmptyCache : RepoResult()
+        object NoOp : RepoResult()
         class Latest(val data: MutableList<CountrySnapshot>) : RepoResult()
     }
 }

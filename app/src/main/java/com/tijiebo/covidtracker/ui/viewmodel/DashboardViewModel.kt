@@ -20,18 +20,18 @@ class DashboardViewModel(private val repo: CovidTrackerRepo) : ViewModel() {
     val countryDetails: MutableLiveData<CountryDetailData> = MutableLiveData()
     val displayError: PublishSubject<Int> = PublishSubject.create()
     val displayIgrInfo: PublishSubject<Boolean> = PublishSubject.create()
-    val displayCountryDetails: PublishSubject<String> =
-        PublishSubject.create()
+    val displayCountryDetails: PublishSubject<String> = PublishSubject.create()
 
-    fun fetchAll() {
+    fun fetchAll(forceRefresh: Boolean = false) {
         disposable.add(
-            repo.getData()
+            repo.getData(forceRefresh)
                 .doOnSubscribe { dashboardState.postValue(UiState.Loading) }
                 .subscribe({
                     dashboardState.postValue(
                         when (it) {
                             is Cached -> UiState.Cached(DashboardData.fromCountrySnapshots(it.data))
                             is Latest -> UiState.Latest(DashboardData.fromCountrySnapshots(it.data))
+                            is NoOp -> UiState.NoOp
                             else -> UiState.Loading
                         }
                     )
@@ -79,6 +79,7 @@ class DashboardViewModel(private val repo: CovidTrackerRepo) : ViewModel() {
     sealed class UiState {
         object Initial : UiState()
         object Loading : UiState()
+        object NoOp : UiState()
         class Error(val withData: Boolean) : UiState()
         class Cached(val data: DashboardData) : UiState()
         class Latest(val data: DashboardData) : UiState()
