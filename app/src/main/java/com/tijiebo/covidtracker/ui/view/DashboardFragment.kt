@@ -11,7 +11,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.tijiebo.covidtracker.NavigationController
 import com.tijiebo.covidtracker.R
-import com.tijiebo.covidtracker.core.cache.CovidSharedPreferences
+import com.tijiebo.covidtracker.core.cache.CacheService
 import com.tijiebo.covidtracker.core.util.formatString
 import com.tijiebo.covidtracker.core.util.setVisible
 import com.tijiebo.covidtracker.core.util.to2dp
@@ -25,7 +25,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DashboardFragment : Fragment() {
 
-    private val clearPrefs: CovidSharedPreferences by inject()
+    private val cacheService: CacheService by inject()
 
     private val viewModel by viewModel<DashboardViewModel>()
     private val disposables = CompositeDisposable()
@@ -55,7 +55,7 @@ class DashboardFragment : Fragment() {
     private fun initialiseViews() {
         binding.primaryCountryIGRInfo.setOnClickListener { viewModel.displayIgrPopup() }
         binding.primaryCountryIGRInfo.setOnLongClickListener {
-            clearPrefs.clearCache()
+            cacheService.clearCache()
             true
         }
         binding.refresh.setOnClickListener { viewModel.fetchAll() }

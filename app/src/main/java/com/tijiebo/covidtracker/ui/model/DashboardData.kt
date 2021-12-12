@@ -18,7 +18,9 @@ data class DashboardData(
             return DashboardData(
                 primaryCountry = snapShots.first { it.countryName == "Singapore" }
                     .toCountrySummary(),
-                vtlCountries = snapShots.filter { it.countryName != "Singapore" }.map {
+                vtlCountries = snapShots.filter {
+                    it.countryName != "Singapore" && it.daily.size >= 15
+                }.map {
                     it.toCountrySummary()
                 }.sortedBy { it.countryName }
             )

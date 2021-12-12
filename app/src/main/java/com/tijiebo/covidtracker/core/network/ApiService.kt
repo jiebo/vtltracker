@@ -15,7 +15,7 @@ interface ApiService {
     fun getCountryLatestSnapshot(
         @Path("countryId") countryId: String,
         @Query("from", encoded = true) fromDate: String =
-            LocalDate.now().minusDays(15).formatForNetwork(),
+            LocalDate.now().minusDays(16).formatForNetwork(),
         @Query("to", encoded = true) toDate: String =
             LocalDate.now().formatForNetwork()
     ): Observable<List<CountrySnapshotResponse>>

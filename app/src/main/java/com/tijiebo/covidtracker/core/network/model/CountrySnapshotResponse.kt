@@ -23,11 +23,11 @@ data class CountrySnapshot(
     )
 
     fun toCountrySummary(): DashboardData.CountrySummary {
-        if (daily.size < 14) return DashboardData.CountrySummary("N/A", 0, 0, 0.0)
+        if (daily.size < 15) return DashboardData.CountrySummary("N/A", 0, 0, 0.0)
         val latest = daily[daily.size - 1]
         val control = daily[daily.size - 2]
-        val currentWeek = daily[daily.size - 1].confirmed - daily[daily.size - 7].confirmed
-        val pastWeek = daily[daily.size - 8].confirmed - daily[daily.size - 14].confirmed
+        val currentWeek = daily[daily.size - 1].confirmed - daily[daily.size - 8].confirmed
+        val pastWeek = daily[daily.size - 8].confirmed - daily[daily.size - 15].confirmed
 
         return DashboardData.CountrySummary(
             countryName = countryName,
@@ -39,17 +39,17 @@ data class CountrySnapshot(
 
     fun toCountryDetails(): CountryDetailData {
         val deltas = mutableListOf<CountryDetailData.DailyDeltas>()
-        for (i in 1 until this.daily.size) {
+        for (i in 0 until this.daily.size - 1) {
             deltas.add(
                 CountryDetailData.DailyDeltas(
                     date = this.daily[i].updatedDate,
-                    cases = this.daily[i].confirmed - this.daily[i - 1].confirmed,
-                    deaths = this.daily[i].deaths - this.daily[i - 1].deaths
+                    cases = this.daily[i + 1].confirmed - this.daily[i].confirmed,
+                    deaths = this.daily[i + 1].deaths - this.daily[i].deaths
                 )
             )
         }
-        val currentWeek = daily[daily.size - 1].confirmed - daily[daily.size - 7].confirmed
-        val pastWeek = daily[daily.size - 8].confirmed - daily[daily.size - 14].confirmed
+        val currentWeek = daily[daily.size - 1].confirmed - daily[daily.size - 8].confirmed
+        val pastWeek = daily[daily.size - 8].confirmed - daily[daily.size - 15].confirmed
         return CountryDetailData(
             countryName = countryName,
             cumulativeCases = daily.last().confirmed,

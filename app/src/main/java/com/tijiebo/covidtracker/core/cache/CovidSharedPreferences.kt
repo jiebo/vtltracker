@@ -19,7 +19,7 @@ class CovidSharedPreferences(
         sharedPreferences.edit()
             .putString(
                 DASHBOARD_DATA_KEY,
-                gson.toJson(data.subList(0, 4))
+                gson.toJson(data)
             )
             .apply()
     }
