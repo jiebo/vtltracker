@@ -29,9 +29,10 @@ class DashboardViewModel(private val repo: CovidTrackerRepo) : ViewModel() {
                 .subscribe({
                     dashboardState.postValue(
                         when (it) {
-                            is Cached -> UiState.Cached(DashboardData.fromCountrySnapshots(it.data))
+                            is Cached -> UiState.Cached(
+                                it.data?.let { data -> DashboardData.fromCountrySnapshots(data) }
+                            )
                             is Latest -> UiState.Latest(DashboardData.fromCountrySnapshots(it.data))
-                            is NoOp -> UiState.NoOp
                             else -> UiState.Loading
                         }
                     )
@@ -81,7 +82,7 @@ class DashboardViewModel(private val repo: CovidTrackerRepo) : ViewModel() {
         object Loading : UiState()
         object NoOp : UiState()
         class Error(val withData: Boolean) : UiState()
-        class Cached(val data: DashboardData) : UiState()
+        class Cached(val data: DashboardData?) : UiState()
         class Latest(val data: DashboardData) : UiState()
     }
 }

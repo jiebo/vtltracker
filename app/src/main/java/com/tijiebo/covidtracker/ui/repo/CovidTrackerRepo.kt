@@ -37,14 +37,11 @@ class CovidTrackerRepo(
 //        "bn"
     )
 
-    fun getData(forceRefresh: Boolean = false): Observable<RepoResult> {
-        return Observable.merge(
-            if (forceRefresh) Observable.just(RepoResult.NoOp) else getCachedData(),
-            getNetworkData()
-        )
+    fun getData(skipCache: Boolean = false): Observable<RepoResult> {
+        return Observable.merge(getCachedData(skipCache), getNetworkData())
     }
 
-    private fun getNetworkData(): Observable<RepoResult.Latest> {
+    private fun getNetworkData(): Observable<RepoResult> {
         val observables = mutableListOf<Observable<List<CountrySnapshotResponse>>>()
         for (code in vtlCountryCodes) {
             observables.add(api.getCountryLatestSnapshot(code))
@@ -56,11 +53,12 @@ class CovidTrackerRepo(
             .map { CountrySnapshot.fromResponse(it) }
             .toList()
             .doAfterSuccess { cache.saveData(it) }
-            .map { RepoResult.Latest(it) }
+            .map { RepoResult.Latest(it) as RepoResult }
             .toObservable()
     }
 
-    private fun getCachedData(): Observable<RepoResult> {
+    private fun getCachedData(skipCache: Boolean = false): Observable<RepoResult> {
+        if (skipCache) return Observable.just(RepoResult.Cached(null))
         val cacheData = cache.getAllData()
         return Observable.just(
             if (cacheData.isEmpty()) RepoResult.EmptyCache
@@ -75,9 +73,8 @@ class CovidTrackerRepo(
     }
 
     sealed class RepoResult {
-        class Cached(val data: List<CountrySnapshot>) : RepoResult()
+        class Cached(val data: List<CountrySnapshot>?) : RepoResult()
         object EmptyCache : RepoResult()
-        object NoOp : RepoResult()
         class Latest(val data: MutableList<CountrySnapshot>) : RepoResult()
     }
 }

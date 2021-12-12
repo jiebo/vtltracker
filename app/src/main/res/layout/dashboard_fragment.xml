@@ -49,7 +49,7 @@
 
     <TextView
         android:id="@+id/tryAgain"
-        style="@style/TextAppearance.MaterialComponents.Subtitle1"
+        style="@style/TextAppearance.MaterialComponents.Subtitle2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -58,7 +58,7 @@
         android:autoSizeTextType="uniform"
         android:elevation="8dp"
         android:maxLines="2"
-        android:text="@string/try_again"
+        android:text="@string/network_failed_message"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="@id/primaryCountryCard"
         app:layout_constraintStart_toStartOf="@id/primaryCountryCard"
@@ -67,9 +67,10 @@
     <ImageView
         android:id="@+id/refresh"
         style="@style/Widget.MaterialComponents.Button.TextButton"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:elevation="8dp"
+        android:padding="0dp"
         android:src="@drawable/ic_refresh_24"
         app:layout_constraintBottom_toBottomOf="@id/primaryCountryCard"
         app:layout_constraintEnd_toEndOf="@id/primaryCountryCard"

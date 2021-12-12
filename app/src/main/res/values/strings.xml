@@ -14,10 +14,11 @@
     <string name="detail_history_igr_label">Weekly infection growth rate</string>
     <string name="detail_history_cumulative_cases_label">total cases</string>
     <string name="detail_history_cumulative_deaths_label">total deaths</string>
-    <string name="cache_disclaimer">Retrieving latest data…</string>
+    <string name="snackbar_retrieving_data">Retrieving latest data…</string>
 
     <string name="country_detail_not_available">Unable to retrieve country data</string>
     <string name="network_failed">Unable to retrieve latest data.</string>
-    <string name="try_again">Encountered some network issues. Please try again.</string>
+    <string name="network_failed_message">Encountered network issues. Please try again.</string>
+    <string name="try_again">Try again</string>
     <string name="generic_error_message">Something went wrong, please try again later.</string>
 </resources>

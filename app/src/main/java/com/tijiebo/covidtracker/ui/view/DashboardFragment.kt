@@ -93,18 +93,15 @@ class DashboardFragment : Fragment() {
     private fun setLatestState(dashboardData: DashboardData) {
         snackbar?.let { if (it.isShown) it.dismiss() }
         snackbar = null
-        binding.swipeRefresh.apply {
-            if (this.isRefreshing) this.isRefreshing = false
-        }
+        dismissSwipeToRefreshLoading()
         displayDashboardData(dashboardData)
     }
 
-    private fun setCachedState(dashboardData: DashboardData) {
+    private fun setCachedState(dashboardData: DashboardData?) {
         snackbar =
-            Snackbar.make(binding.root, R.string.cache_disclaimer, Snackbar.LENGTH_LONG).apply {
-                show()
-            }
-        displayDashboardData(dashboardData)
+            Snackbar.make(binding.root, R.string.snackbar_retrieving_data, Snackbar.LENGTH_LONG)
+                .apply { show() }
+        dashboardData?.let { displayDashboardData(it) }
     }
 
     private fun displayDashboardData(dashboardData: DashboardData) {
@@ -120,15 +117,20 @@ class DashboardFragment : Fragment() {
     }
 
     private fun setErrorState() {
+        dismissSwipeToRefreshLoading()
         snackbar =
             Snackbar.make(binding.root, R.string.network_failed, Snackbar.LENGTH_INDEFINITE)
                 .apply {
-                    setAction(R.string.try_again) {
-                        viewModel.fetchAll()
-                    }
+                    setAction(R.string.try_again) { viewModel.fetchAll(true) }
                     show()
                 }
 
+    }
+
+    private fun dismissSwipeToRefreshLoading() {
+        binding.swipeRefresh.apply {
+            if (this.isRefreshing) this.isRefreshing = false
+        }
     }
 
     private fun displayIgrInfo() {
