@@ -26,7 +26,11 @@ class MainActivity : AppCompatActivity(), NavigationController {
                 R.anim.slide_in_right,
                 R.anim.slide_out_right,
             )
-            add(R.id.container, CountryDetailFragment.newInstance(), CountryDetailFragment.TAG)
+            add(
+                R.id.container,
+                CountryDetailFragment.newInstance(countryId),
+                CountryDetailFragment.TAG
+            )
             addToBackStack(null)
             commit()
         }

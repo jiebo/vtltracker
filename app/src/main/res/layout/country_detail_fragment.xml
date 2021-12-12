@@ -41,6 +41,12 @@
         app:layout_constraintBottom_toTopOf="@id/summaryContentCard"
         tools:text="Australia" />
 
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/contentGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="summaryContentCard,detailHistoryTitle,historyLabel,detailIgrTitle"/>
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/summaryContentCard"
         android:layout_width="wrap_content"

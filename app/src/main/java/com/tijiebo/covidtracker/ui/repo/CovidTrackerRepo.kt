@@ -66,10 +66,10 @@ class CovidTrackerRepo(
         )
     }
 
-    fun getCountryDate(code: String): Single<CountryDetailData> {
+    fun getCountryData(code: String): Single<CountryDetailData> {
         return cache.getCountryData(code)?.let {
             Single.just(it.toCountryDetails())
-        } ?: throw GeneralServiceException(R.string.country_detail_not_available)
+        } ?: Single.error(GeneralServiceException(R.string.country_detail_not_available))
     }
 
     sealed class RepoResult {

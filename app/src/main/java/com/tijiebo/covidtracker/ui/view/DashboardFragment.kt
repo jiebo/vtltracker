@@ -21,13 +21,13 @@ import com.tijiebo.covidtracker.ui.viewmodel.DashboardViewModel
 import com.tijiebo.covidtracker.ui.viewmodel.DashboardViewModel.UiState
 import io.reactivex.disposables.CompositeDisposable
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DashboardFragment : Fragment() {
 
     private val clearPrefs: CovidSharedPreferences by inject()
 
-    private val viewModel by sharedViewModel<DashboardViewModel>()
+    private val viewModel by viewModel<DashboardViewModel>()
     private val disposables = CompositeDisposable()
 
     private var snackbar: Snackbar? = null
@@ -81,12 +81,9 @@ class DashboardFragment : Fragment() {
         })
         disposables.addAll(
             viewModel.displayIgrInfo.subscribe { displayIgrInfo() },
-            viewModel.displayCountryDetails.subscribe({
-                viewModel.getCountryDetail(it)
+            viewModel.displayCountryDetails.subscribe {
                 navigationController?.navigateToDetailsPage(it)
-            }, {
-
-            })
+            }
         )
     }
 

@@ -10,6 +10,7 @@ import com.tijiebo.covidtracker.ui.model.GeneralServiceException
 import com.tijiebo.covidtracker.ui.repo.CovidTrackerRepo
 import com.tijiebo.covidtracker.ui.repo.CovidTrackerRepo.RepoResult.*
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 
 class DashboardViewModel(private val repo: CovidTrackerRepo) : ViewModel() {
@@ -49,7 +50,7 @@ class DashboardViewModel(private val repo: CovidTrackerRepo) : ViewModel() {
 
     fun getCountryDetail(country: String) {
         disposable.add(
-            repo.getCountryDate(country)
+            repo.getCountryData(country)
                 .subscribe({
                     countryDetails.postValue(it)
                 }, {
