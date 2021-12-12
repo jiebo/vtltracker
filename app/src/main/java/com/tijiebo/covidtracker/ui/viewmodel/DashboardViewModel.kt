@@ -81,7 +81,6 @@ class DashboardViewModel(private val repo: CovidTrackerRepo) : ViewModel() {
     sealed class UiState {
         object Initial : UiState()
         object Loading : UiState()
-        object NoOp : UiState()
         class Error(val withData: Boolean) : UiState()
         class Cached(val data: DashboardData?) : UiState()
         class Latest(val data: DashboardData) : UiState()

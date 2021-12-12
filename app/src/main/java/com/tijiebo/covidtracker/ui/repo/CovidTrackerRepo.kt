@@ -1,7 +1,7 @@
 package com.tijiebo.covidtracker.ui.repo
 
 import com.tijiebo.covidtracker.R
-import com.tijiebo.covidtracker.core.cache.CovidSharedPreferences
+import com.tijiebo.covidtracker.core.cache.CacheService
 import com.tijiebo.covidtracker.core.network.ApiService
 import com.tijiebo.covidtracker.core.network.model.CountrySnapshot
 import com.tijiebo.covidtracker.core.network.model.CountrySnapshotResponse
@@ -14,7 +14,7 @@ import io.reactivex.schedulers.Schedulers
 
 class CovidTrackerRepo(
     private val api: ApiService,
-    private val cache: CovidSharedPreferences
+    private val cache: CacheService
 ) {
 
     private val vtlCountryCodes = arrayOf(

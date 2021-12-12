@@ -10,12 +10,12 @@ import com.tijiebo.covidtracker.core.network.model.CountrySnapshot
 class CovidSharedPreferences(
     context: Context,
     private val gson: Gson
-) {
+) : CacheService {
 
     private val sharedPreferences: SharedPreferences =
         context.getSharedPreferences(DASHBOARD_PREFS, MODE_PRIVATE)
 
-    fun saveData(data: List<CountrySnapshot>) {
+    override fun saveData(data: List<CountrySnapshot>) {
         sharedPreferences.edit()
             .putString(
                 DASHBOARD_DATA_KEY,
@@ -24,18 +24,18 @@ class CovidSharedPreferences(
             .apply()
     }
 
-    fun getAllData(): List<CountrySnapshot> {
+    override fun getAllData(): List<CountrySnapshot> {
         return sharedPreferences.getString(DASHBOARD_DATA_KEY, null)?.let {
             val listType = object : TypeToken<List<CountrySnapshot>>() {}.type
             return@let gson.fromJson(it, listType)
         } ?: emptyList()
     }
 
-    fun getCountryData(countryName: String): CountrySnapshot? {
+    override fun getCountryData(countryName: String): CountrySnapshot? {
         return getAllData().firstOrNull { it.countryName == countryName }
     }
 
-    fun clearCache() {
+    override fun clearCache() {
         sharedPreferences.edit().clear().apply()
     }
 

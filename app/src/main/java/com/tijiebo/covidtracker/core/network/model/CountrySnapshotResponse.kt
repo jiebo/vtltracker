@@ -23,6 +23,7 @@ data class CountrySnapshot(
     )
 
     fun toCountrySummary(): DashboardData.CountrySummary {
+        if (daily.size < 14) return DashboardData.CountrySummary("N/A", 0, 0, 0.0)
         val latest = daily[daily.size - 1]
         val control = daily[daily.size - 2]
         val currentWeek = daily[daily.size - 1].confirmed - daily[daily.size - 7].confirmed
