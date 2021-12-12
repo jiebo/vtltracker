@@ -1,5 +1,6 @@
 package com.tijiebo.covidtracker.ui.repo
 
+import androidx.annotation.VisibleForTesting
 import com.tijiebo.covidtracker.R
 import com.tijiebo.covidtracker.core.cache.CacheService
 import com.tijiebo.covidtracker.core.network.ApiService
@@ -41,9 +42,10 @@ class CovidTrackerRepo(
         return Observable.merge(getCachedData(skipCache), getNetworkData())
     }
 
-    private fun getNetworkData(): Observable<RepoResult> {
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    fun getNetworkData(countryList: Array<String> = vtlCountryCodes): Observable<RepoResult> {
         val observables = mutableListOf<Observable<List<CountrySnapshotResponse>>>()
-        for (code in vtlCountryCodes) {
+        for (code in countryList) {
             observables.add(api.getCountryLatestSnapshot(code))
         }
 
@@ -57,7 +59,8 @@ class CovidTrackerRepo(
             .toObservable()
     }
 
-    private fun getCachedData(skipCache: Boolean = false): Observable<RepoResult> {
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    fun getCachedData(skipCache: Boolean = false): Observable<RepoResult> {
         if (skipCache) return Observable.just(RepoResult.Cached(null))
         val cacheData = cache.getAllData()
         return Observable.just(
