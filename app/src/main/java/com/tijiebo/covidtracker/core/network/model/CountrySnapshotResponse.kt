@@ -39,12 +39,12 @@ data class CountrySnapshot(
 
     fun toCountryDetails(): CountryDetailData {
         val deltas = mutableListOf<CountryDetailData.DailyDeltas>()
-        for (i in 0 until this.daily.size - 1) {
+        for (i in 1 until this.daily.size) {
             deltas.add(
                 CountryDetailData.DailyDeltas(
                     date = this.daily[i].updatedDate,
-                    cases = this.daily[i + 1].confirmed - this.daily[i].confirmed,
-                    deaths = this.daily[i + 1].deaths - this.daily[i].deaths
+                    cases = this.daily[i].confirmed - this.daily[i - 1].confirmed,
+                    deaths = this.daily[i].deaths - this.daily[i - 1].deaths
                 )
             )
         }

@@ -10,6 +10,7 @@
     <string name="igr_disclaimer_message">This is the ratio between the number of cases in one week and the number in the previous week. It\'s a useful indicator to assess the trajectory of a country/region\'s Covid situation</string>
     <string name="detail_history_title">Past 2 weeks</string>
     <string name="detail_history_cases_label">Cases</string>
+    <string name="detail_history_cases_disclaimer">Reported numbers on weekends are lower in some countries</string>
     <string name="detail_history_deaths_label">Deaths</string>
     <string name="detail_history_igr_label">Weekly infection growth rate</string>
     <string name="detail_history_cumulative_cases_label">total cases</string>

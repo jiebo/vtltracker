@@ -45,7 +45,7 @@
         android:id="@+id/contentGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="summaryContentCard,detailHistoryTitle,historyLabel,detailIgrTitle"/>
+        app:constraint_referenced_ids="summaryContentCard,detailHistoryTitle,historyLabel,detailIgrTitle" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/summaryContentCard"
@@ -157,6 +157,19 @@
         tools:listitem="@layout/history_item" />
 
     <TextView
+        android:id="@+id/casesDisclaimer"
+        style="@style/TextAppearance.MaterialComponents.Body2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:text="@string/detail_history_cases_disclaimer"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/detailHistoryRecyclerView" />
+
+    <TextView
         android:id="@+id/detailIgrTitle"
         style="@style/TextAppearance.MaterialComponents.Headline6"
         android:layout_width="0dp"
@@ -165,7 +178,7 @@
         android:text="@string/detail_history_igr_label"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/detailHistoryRecyclerView" />
+        app:layout_constraintTop_toBottomOf="@id/casesDisclaimer" />
 
     <TextView
         android:id="@+id/detailIgr"

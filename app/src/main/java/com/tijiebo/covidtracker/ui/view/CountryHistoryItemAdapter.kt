@@ -2,11 +2,14 @@ package com.tijiebo.covidtracker.ui.view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.tijiebo.covidtracker.R
 import com.tijiebo.covidtracker.core.util.formatString
 import com.tijiebo.covidtracker.core.util.formatToCalendarDate
 import com.tijiebo.covidtracker.databinding.HistoryItemBinding
 import com.tijiebo.covidtracker.ui.model.CountryDetailData
+import java.util.*
 
 class CountryHistoryItemAdapter(
     private val list: MutableList<CountryDetailData.DailyDeltas>
@@ -38,6 +41,19 @@ class CountryHistoryItemAdapter(
             binding.date.text = delta.date.formatToCalendarDate()
             binding.cases.text = delta.cases.formatString()
             binding.deaths.text = delta.deaths.formatString()
+            val calendar = Calendar.getInstance().apply {
+                this.time = delta.date
+            }
+            binding.root.setCardBackgroundColor(
+                ContextCompat.getColor(
+                    binding.root.context,
+                    if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY ||
+                        calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY
+                    )
+                        R.color.colorSecondaryDark
+                    else R.color.white
+                )
+            )
         }
     }
 }
